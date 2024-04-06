@@ -5,4 +5,4 @@ Este é um pequeno projeto produzido durante o programa de Residência de TIC/So
 
 # A Estrutura do Projeto
 
-![UML do Projeto](.\images\UML_Diagram.jpg)
+![UML do Projeto](UML_Diagram.jpg)
