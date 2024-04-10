@@ -1,5 +1,6 @@
 package gerenciamento.gui;
 import gerenciamento.backEnd.Funcionario;
+import gerenciamento.bancoDeDados.ConexaoBD;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -13,6 +14,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JList;
+import javax.swing.JMenuItem;
+import java.awt.Choice;
 
 public class telaLogin extends JFrame {
 
@@ -20,7 +26,8 @@ public class telaLogin extends JFrame {
 	private JPanel contentPane;
 	private JTextField emailTextField;
 	private JTextField senhaTextField;
-
+	static ConexaoBD banco = new ConexaoBD();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -80,12 +87,50 @@ public class telaLogin extends JFrame {
 		sl_contentPane.putConstraint(SpringLayout.WEST, entrarButao, 180, SpringLayout.WEST, contentPane);
 		entrarButao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				banco.conectar();
+				String respostaBanco = banco.conectarUsuario(emailTextField.getText(), senhaTextField.getText());
+				if(respostaBanco.equals(emailTextField.getText() + senhaTextField.getText())) {
+					try {
+						menuInicial menu = new menuInicial();
+						menu.setVisible(true);
+						banco.fechaConexao();
+						setVisible(false);
+					} catch (Exception r) {
+						r.printStackTrace();
+					}
+				} else {
+					try {
+						telaErro erro = new telaErro();
+						erro.setVisible(true);
+						banco.fechaConexao();
+						setVisible(false);
+					} catch (Exception r) {
+						r.printStackTrace();
+					}
+				}
 			}
 		});
 		contentPane.add(entrarButao);
 		
 		JLabel cadastroButao = new JLabel("Cadastrar-se");
+		cadastroButao.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					banco.fechaConexao();
+					telaCadastro cadastro = new telaCadastro();
+					cadastro.setVisible(true);
+					setVisible(false);
+				}
+				catch (Exception t) {
+					banco.fechaConexao();
+					telaErro erro = new telaErro();
+					erro.setVisible(true);
+					setVisible(false);
+					t.printStackTrace();
+				}
+			}
+		});
 		sl_contentPane.putConstraint(SpringLayout.NORTH, cadastroButao, 12, SpringLayout.SOUTH, entrarButao);
 		sl_contentPane.putConstraint(SpringLayout.WEST, cadastroButao, 180, SpringLayout.WEST, contentPane);
 		contentPane.add(cadastroButao);
