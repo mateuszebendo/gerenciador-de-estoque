@@ -6,3 +6,7 @@ Este é um pequeno projeto produzido durante o programa de Residência de TIC/So
 # A Estrutura do Projeto
 
 ![UML do Projeto](UML_Diagram.jpg)
+
+# O Diagrama do Banco de Dados
+
+![UML do Projeto](diagramaBD.png)

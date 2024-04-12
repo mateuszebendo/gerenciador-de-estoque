@@ -1,16 +1,16 @@
 package gerenciamento.gui;
-import gerenciamento.bancoDeDados.ConexaoBD;
-
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import gerenciamento.DAO.UsuarioDAO;
 
 public class telaCadastro extends JFrame {
 
@@ -19,7 +19,6 @@ public class telaCadastro extends JFrame {
 	private JTextField nomeTextField;
 	private JTextField emailTextField;
 	private JTextField senhaTextField;
-	static ConexaoBD banco = new ConexaoBD();
 
 	/**
 	 * Launch the application.
@@ -83,17 +82,14 @@ public class telaCadastro extends JFrame {
 				String novoNome = nomeTextField.getText();
 				String novoEmail = emailTextField.getText();
 				String novaSenha = senhaTextField.getText();
-				banco.conectar();
-				banco.cadastrarUsuario(novoNome, novoEmail, novaSenha);
+				UsuarioDAO.cadastrarUsuario(novoNome, novoEmail, novaSenha);
 				
 				try { 
-					banco.fechaConexao();
 					telaLogin login = new telaLogin();
 					login.setVisible(true);
 					setVisible(false);
 				}
 				catch(Exception r){
-					banco.fechaConexao();
 					telaErro erro = new telaErro();
 					setVisible(false);
 					erro.setVisible(true);

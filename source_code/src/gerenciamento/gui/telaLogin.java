@@ -1,6 +1,8 @@
 package gerenciamento.gui;
+import gerenciamento.DAO.ConexaoBD;
+import gerenciamento.DAO.UsuarioDAO;
 import gerenciamento.backEnd.Funcionario;
-import gerenciamento.bancoDeDados.ConexaoBD;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -26,7 +28,6 @@ public class telaLogin extends JFrame {
 	private JPanel contentPane;
 	private JTextField emailTextField;
 	private JTextField senhaTextField;
-	static ConexaoBD banco = new ConexaoBD();
 	
 	/**
 	 * Launch the application.
@@ -87,13 +88,11 @@ public class telaLogin extends JFrame {
 		sl_contentPane.putConstraint(SpringLayout.WEST, entrarButao, 180, SpringLayout.WEST, contentPane);
 		entrarButao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				banco.conectar();
-				String respostaBanco = banco.conectarUsuario(emailTextField.getText(), senhaTextField.getText());
+				String respostaBanco = UsuarioDAO.conectarUsuario(emailTextField.getText(), senhaTextField.getText());
 				if(respostaBanco.equals(emailTextField.getText() + senhaTextField.getText())) {
 					try {
 						menuInicial menu = new menuInicial();
 						menu.setVisible(true);
-						banco.fechaConexao();
 						setVisible(false);
 					} catch (Exception r) {
 						r.printStackTrace();
@@ -102,7 +101,6 @@ public class telaLogin extends JFrame {
 					try {
 						telaErro erro = new telaErro();
 						erro.setVisible(true);
-						banco.fechaConexao();
 						setVisible(false);
 					} catch (Exception r) {
 						r.printStackTrace();
@@ -117,13 +115,11 @@ public class telaLogin extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					banco.fechaConexao();
 					telaCadastro cadastro = new telaCadastro();
 					cadastro.setVisible(true);
 					setVisible(false);
 				}
 				catch (Exception t) {
-					banco.fechaConexao();
 					telaErro erro = new telaErro();
 					erro.setVisible(true);
 					setVisible(false);
