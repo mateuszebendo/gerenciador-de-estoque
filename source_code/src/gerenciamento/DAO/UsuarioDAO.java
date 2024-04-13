@@ -8,10 +8,11 @@ import java.sql.Statement;
 
 public class UsuarioDAO {
 	static PreparedStatement pstmt = null;
+	
 	static public String conectarUsuario(String login, String senha) {
         ResultSet usuarioConectado = null;
         try {
-        	String query = "SELECT email, senha FROM postgres.public.funcionarios WHERE email = ? and senha = ?";
+        	String query = "SELECT email, senha FROM Funcionario WHERE email = ? and senha = ?";
         	pstmt = ConexaoBD.conectar().prepareStatement(query);
         	
         	pstmt.setString(1, login);
@@ -35,7 +36,7 @@ public class UsuarioDAO {
     
 	static public void cadastrarUsuario(String nome, String email, String senha) {
         try {
-            String query = "INSERT INTO postgres.public.funcionarios (nome, email, senha) "
+            String query = "INSERT INTO Funcionario (nome, email, senha) "
                     + "VALUES (?, ?, ?);";
   
             pstmt = ConexaoBD.conectar().prepareStatement(query);
@@ -50,4 +51,10 @@ public class UsuarioDAO {
             System.out.println("Erro ao cadastrar usuário: " + e.getMessage());
         } 
     }
+	
+	public static void main(String[] args) {
+		UsuarioDAO usuario = new UsuarioDAO();
+		
+		System.out.println(usuario.conectarUsuario("luiz.miele@hotmail.com", "1212"));
+	}
 }

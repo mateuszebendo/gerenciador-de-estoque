@@ -85,8 +85,8 @@ public class telaCadastro extends JFrame {
 				UsuarioDAO.cadastrarUsuario(novoNome, novoEmail, novaSenha);
 				
 				try { 
-					telaLogin login = new telaLogin();
-					login.setVisible(true);
+					telaCadastrado cadastrado = new telaCadastrado();
+					cadastrado.setVisible(true);
 					setVisible(false);
 				}
 				catch(Exception r){

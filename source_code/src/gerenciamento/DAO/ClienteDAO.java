@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ClienteDAO extends UsuarioDAO {
+public class ClienteDAO {
 	PreparedStatement pstmt = null;
 	
 	public void cadastrarCliente (String nome, String endereco, double credito_disponivel, double divida) {
